@@ -36,23 +36,26 @@ body {
 
 .inputs {
     text-align: center;
-    margin-top: 5%;
+    margin-top: 3%;
 }
 
 
 .time {
     width: 89px;
-    height: 47px;
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 39px;
-    font-size: 15px;
+    height: 54px;
+    border-radius: 29px;
+    font-size: 19px;
     text-align: center;
     margin: 1%;
+    background-color: #24242C;
+    color: #fff;
 }
 
 
 p {
     font-size: 32px;
+    margin-top: -5%;
+    margin-bottom: 11%;
 }
 
 
@@ -64,7 +67,7 @@ p {
 #button {
     width: 167px;
     font-size: 21px;
-    background-color: rgb(255, 165, 0);
+    background-color: #009E5F;
 }
 
 
