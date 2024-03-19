@@ -1,5 +1,9 @@
 @charset  "UTF-8";
 
+body {
+    background-color: #19191E;
+    color: #fff;
+}
 
 /*-----------------------------*/
 /*----------big-div------------*/
@@ -14,35 +18,55 @@
     width: 100%;
 }
 
+
 .alarm {
     text-align: center;
 }
+
 
 .current-time {
     font-size: 20rem;
 }
 
+
 .user-time i {
     font-size: 30px;
 }
+
 
 .inputs {
     text-align: center;
     margin-top: 5%;
 }
 
+
 .time {
-    width: 84px;
-    height: 38px;
-    border: 1px solid #000;
+    width: 89px;
+    height: 47px;
+    border: 1px solid rgb(0, 0, 0);
     border-radius: 39px;
     font-size: 15px;
     text-align: center;
+    margin: 1%;
 }
 
-#button {
-    width: 121px;
+
+p {
+    font-size: 32px;
 }
+
+
+.user-time {
+    padding-left: 30px;
+}
+
+
+#button {
+    width: 167px;
+    font-size: 21px;
+    background-color: rgb(255, 165, 0);
+}
+
 
 @media (min-width: 240px) and (max-width: 450px) {
     .current-time {
