@@ -21,6 +21,12 @@ const hoursInput = select('#hours');
 const minutesInput = select('#minutes');
 const button = select('#button');
 const userTimeSpan = select('.user-time');
+const bellDisplay = select('.bell-display');
+
+const alarmAudio = new Audio('./assets/audio/alarm_clock.mp3');
+alarmAudio.type = 'audio/mp3';
+
+const theAlarm = new Date();
 
 
 // Show current time
@@ -30,22 +36,14 @@ function getTime() {
     let minutes = now.getMinutes();
     if (minutes < 10) {
         minutes = `0${minutes}`;
-    }
+    }   
     const currentTime = `${hours}:${minutes}`;
     presentTime.innerText = currentTime;
-    return { hours, minutes };
+
+    setTimeout(() =>{
+        getTime();
+    }, 1000);
 }
-getTime();
-
-
-// Attach event listeners to inputs
-const inputs = selectAll('.time');
-inputs.forEach(function(input) {
-    input.addEventListener('input', function() {
-        validateInput(input);
-        updateUserTime(); // Update user-set time display when inputs change
-    });
-});
 
 
 // validation of inputs
@@ -81,44 +79,52 @@ function clearInputs() {
     minutesInput.value = '';
 }
 
-window.addEventListener('load', function() {
-    clearInputs();
-    getTime();
-});
-
-
-button.addEventListener('click', function() {
-    clearInputs();
-    compareTime()
-});
-
 
 function getUserTime() {
-    const hours = parseInt(hoursInput.value) || 0;
-    const minutes = parseInt(minutesInput.value) || 0;
-    return { hours, minutes };
+    let hours = hoursInput.value;
+    let minutes = minutesInput.value;
+
+    
+    if (hours.length == 1){
+        hours = '0'+hours;
+    }
+    
+    if (minutes.length == 1){
+        minutes = '0'+minutes;
+    }
+
+    userTimeSpan.innerText = `${hours}:${minutes}`;
+    theAlarm.setHours(hours);
+    theAlarm.setMinutes(minutes);
+
+    clearInputs();
 }
 
-function updateUserTime() {
-    const userTime = getUserTime();
-    userTimeSpan.innerText = `${userTime.hours} : ${userTime.minutes}`;
-}
-updateUserTime();
 
-
-// Function to compare current time with user-set time
 function compareTime() {
-    const currentTime = getTime(); 
-    const userTime = getUserTime(); 
-    if (currentTime.hours === userTime.hours && currentTime.minutes === userTime.minutes) {
-        // Play audio
-        const alarmAudio = new Audio('./assets/audio/alarm_clock sound.mp3'); // Define audio
-        alarmAudio.play(); 
+    const currentTime = new Date();
+    if ((currentTime.getHours() === theAlarm.getHours()) && (currentTime.getMinutes() === theAlarm.getMinutes())) {
+        alarmAudio.play();
+        bellDisplay.classList.add('red');
+        userTimeSpan.classList.add('show');
+
+        setTimeout(() => { 
+            bellDisplay.classList.remove('red'); 
+            userTimeSpan.classList.remove('show'); // Remove 'show' class after a certain duration
+            userTimeSpan.innerText = '';
+        }, 8000);
+    } else {
+        setTimeout(() => {
+            compareTime();
+        }, 1000);
     }
 }
 
-compareTime();
-setInterval(compareTime, 1000); 
+window.addEventListener('load', function() {
+    getTime();
+});
 
-
-
+button.addEventListener('click', function() {
+    getUserTime();
+    compareTime();
+});
